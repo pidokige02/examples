@@ -1,10 +1,27 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/form">Form</router-link> |
+    <router-link to="/about">About</router-link> |
   </div>
   <router-view/>
+  <!-- <TeleportExample /> -->
+  <!-- <TeleportSample1 /> -->
+  <!-- <TeleportVideo /> -->
 </template>
+<script>
+// import TeleportExample from "@/components/teleport/TeleportExample";
+// import TeleportSample1 from "@/components/teleport/TeleportSample1";
+// import TeleportVideo from "@/components/teleport/TeleportVideo";
+
+export default {
+  components: {
+    // TeleportExample
+    // TeleportSample1
+    // TeleportVideo
+  }
+};
+</script>
 
 <style>
 #app {
