@@ -2,7 +2,15 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/form">Form</router-link> |
-    <router-link to="/about">About</router-link> |
+    <router-link to="/Markdown">Markdown</router-link> |
+    <router-link to="/FetchData">FetchData</router-link> |
+    <router-link to="/GridView">GridView</router-link> |
+    <router-link to="/TreeView">TreeView</router-link> |
+    <router-link to="/SVGGraph">SVGGraph</router-link> |
+    <router-link to="/ModalView">ModalView</router-link> |
+    <router-link to="/TransitionGroup">TransitionGroup</router-link> |
+    <router-link to="/TodoMVC">TodoMVC</router-link>
+
   </div>
   <router-view/>
   <!-- <TeleportExample /> -->
@@ -28,7 +36,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
 

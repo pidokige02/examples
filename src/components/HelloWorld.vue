@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h2>{{ msg }}</h2>
     <h3>ES6 destructuring samples</h3>
     <a href="https://hobbycoding.tistory.com/128" target="_blank" rel="noopener">Blog</a>
     <h3>ES6 spread operator</h3>
@@ -39,33 +39,129 @@
       <BaseInput label="Title" v-model="inputText2" type="text" placeholder="Title" class="field" />
     </div>
 
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div>
+      <h3>handling user input</h3>
+      <p>{{ user_input_msg }}</p>
+      <button @click="reverseMessage_input_msg">Reverse Message</button>
+      <button @click="user_input_msg += '!'">Append "!"</button>
+      <a href="https://vuejs.org" @click.prevent="notify">
+        A link with e.preventDefault()
+      </a>
+    </div>
+
+    <div>
+      <h3>attributes binding</h3>
+      <p>
+        <span :title="user_input_msg">
+          Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </span>
+      </p>
+  <!--
+  class bindings have special support for objects and arrays
+  in addition to plain strings
+  -->
+      <p :class="{ red: isRed }" @click="toggleRed">
+        This should be red... but click me to toggle it.
+      </p>
+  <!-- style bindings also support object and arrays -->
+      <p :style="{ color }" @click="toggleColor">
+        This should be green, and should toggle between green and blue on click.
+      </p>
+    </div>
+
+    <div>
+      <h3>Conditions and Loops</h3>
+      <button @click="show = !show">Toggle List</button>
+      <button @click="list.push(list.length + 1)">Push Number</button>
+      <button @click="list.pop()">Pop Number</button>
+      <button @click="list.reverse()">Reverse List</button>
+
+      <ul v-if="show && list.length">
+        <li v-for="item of list" :key="item.id">{{ item }}</li>
+      </ul>
+      <p v-else-if="list.length">List is not empty, but hidden.</p>
+      <p v-else>List is empty.</p>    </div>
+    </div>
+
+    <div>
+      <h3>Form Binding</h3>
+      <h2>Text Input</h2>
+        <input v-model="text"> {{ text }}
+
+        <h2>Checkbox</h2>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">Checked: {{ checked }}</label>
+
+        <!--
+          multiple checkboxes can bind to the same
+          array v-model value
+        -->
+        <h2>Multi Checkbox</h2>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <p>Checked names: <pre>{{ checkedNames }}</pre></p>
+
+        <h2>Radio</h2>
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+
+        <h2>Select</h2>
+        <select v-model="selected">
+          <option disabled value="">Please select one</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+
+        <h2>Multi Select</h2>
+        <select v-model="multiSelected" multiple style="width:100px">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <span>Selected: {{ multiSelected }}</span>
+    </div>
+    <div>
+      <h3>Simple Components</h3>
+      <ol>
+        <!--
+          We are providing each todo-item with the todo object
+          it's representing, so that its content can be dynamic.
+          We also need to provide each component with a "key",
+          which is explained in the guide section on v-for.
+        -->
+        <TodoItem
+          v-for="item in groceryList"
+          :todo="item"
+          :key="item.id"
+        ></TodoItem>
+      </ol>
+    </div>
+
 </template>
 
 <script>
-import BaseInput from './BaseInput.vue';
+// import BaseInput from './BaseInput.vue';
+import TodoItem from '@/components/TodoItem.vue';
+// import TeleportExample from "@/components/teleport/TeleportExample";
+
 
 export default {
   name: 'HelloWorld',
 
   components: {
-    BaseInput
+    //BaseInput
+    TodoItem
   },
 
   props: {
@@ -82,6 +178,25 @@ export default {
         { text: 'JavaScript 배우기' },
         { text: 'Vue 배우기' },
         { text: '무언가 멋진 것을 만들기' }
+      ],
+      user_input_msg: 'Hello World!',
+      isRed: true,
+      color: 'green',
+
+      show: true,
+      list: [1, 2, 3],
+
+      text: 'Edit me',
+      checked: true,
+      checkedNames: ['Jack'],
+      picked: 'One',
+      selected: 'A',
+      multiSelected: ['A'],
+
+      groceryList: [
+        { id: 0, text: 'Vegetables' },
+        { id: 1, text: 'Cheese' },
+        { id: 2, text: 'Whatever else humans are supposed to eat' }
       ]
     };
   },
@@ -93,6 +208,18 @@ export default {
       var updatedText = event.target.value;
       this.inputText = updatedText;
     },
+    reverseMessage_input_msg: function () {
+      this.user_input_msg = this.user_input_msg.split('').reverse().join('')
+    },
+    notify() {
+      alert('navigation was prevented.')
+    },
+    toggleRed() {
+      this.isRed = !this.isRed
+    },
+    toggleColor() {
+      this.color = this.color === 'green' ? 'blue' : 'green'
+    }
   }
 }
 </script>
@@ -112,5 +239,12 @@ li {
 }
 a {
   color: #42b983;
+}
+button, a {
+  display: block;
+  margin-bottom: 1em;
+}
+.red {
+  color: red;
 }
 </style>
